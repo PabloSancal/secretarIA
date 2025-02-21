@@ -13,13 +13,15 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
 
     async createMessage(userId: string, messageText: string) {
         try {
-            await this.message.create({
+            const newMessage = await this.message.create({
                 data: {
                     messageText: messageText,
                     userId: userId,
                     Date: new Date()
                 }
-            })
+            });
+
+            return newMessage;
 
         } catch (error) {
             this.logger.error(`Unexpected error while creating message - ${error}`)

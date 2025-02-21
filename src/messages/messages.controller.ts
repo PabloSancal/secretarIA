@@ -10,6 +10,6 @@ export class MessagesController {
   createMessage(
     @Body() createMessageDto: CreateMessageDto
   ){
-    this.messagesService.createMessage(createMessageDto.userId, createMessageDto.messageText );
+    return this.messagesService.createMessage(createMessageDto.userId, createMessageDto.messageText );
   }
 }

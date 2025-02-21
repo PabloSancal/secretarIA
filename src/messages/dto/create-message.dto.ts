@@ -1,4 +1,4 @@
-import { IsString, IsUUID } from "class-validator";
+import { IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateMessageDto {
 
@@ -6,6 +6,7 @@ export class CreateMessageDto {
     messageText: string;
     
     @IsUUID()
+    @IsOptional() //Todo: Eliminar optional cuando se haga users service
     userId: string;
     
 }
