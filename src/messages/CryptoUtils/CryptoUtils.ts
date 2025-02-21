@@ -31,9 +31,6 @@ this.key = createHash('sha256').update(String(this.key)).digest('hex').substring
   encryptMessage(message: string) {
     const iv = randomBytes(12);
 
-    console.log({key: this.key})
-
-
     const cipher = createCipheriv('chacha20-poly1305', this.key, iv);
 
     const encryptedBuffer = Buffer.concat([
@@ -49,24 +46,17 @@ this.key = createHash('sha256').update(String(this.key)).digest('hex').substring
   // Returns plain text password
 
   decryptMessage(message: string) {
-    console.log(` MESSAGE STRING -> ${message}`)
 
     const messageBuffer = Buffer.from(message,'hex');
-    console.log(` MESSAGE BUFFER ${messageBuffer.toString('hex')}`)
 
     const iv = messageBuffer.slice(0,12)
-    console.log(`IV -  > ${iv.toString('hex')}`)
 
     const cryptedMessage = messageBuffer.slice(12);
-    console.log({key: this.key})
-
 
     const decipher = createDecipheriv('chacha20-poly1305', this.key, iv);
 
     const decryptedMessage = Buffer.concat([decipher.update(cryptedMessage)]);
-    console.log('asdfasdfsadf')
 
-    console.log(decryptedMessage.toString())
     return decryptedMessage.toString();
   }
 }
