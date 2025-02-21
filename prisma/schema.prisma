@@ -8,8 +8,14 @@ datasource db {
 }
 
 model Message {
-  id          String     @id @default(uuid()) @db.Uuid
+  id          String   @id @default(uuid()) @db.Uuid
   messageText String
-  userId      String?    @db.Uuid
-  Date        DateTime   @default(now())
+  userId      String?  @db.Uuid
+  Date        DateTime @default(now())
+}
+
+model User {
+  id          String @id @default(uuid()) @db.Uuid
+  name        String
+  phoneNumber String @unique()
 }
