@@ -33,7 +33,6 @@ export class WhatsappService implements OnModuleInit {
         });
 
         this.client.on('message', (msg) => {
-            console.log('On message...')
             this.logger.verbose(`${msg.from}: ${msg.body}`);
 
             const command = msg.body.match(/^!(\S*)/);
@@ -43,13 +42,10 @@ export class WhatsappService implements OnModuleInit {
                     msg.reply('Buenas y santas');
 
                 } else if (command[0] === '!message') {
-                    const message = msg.body.slice(0, command[0].length + 1)
-                    this.messagesService.createMessage(message, msg.from)
+                    const message = msg.body.slice(command[0].length + 1)
+                    this.messagesService.createMessage('a2946dce-4719-40f8-97e8-95121b8230b6', message)
                 }
 
-                else if (msg.body == 'Hola') {
-                    msg.reply('😳')
-                }
             }
         });
         this.client.initialize();
