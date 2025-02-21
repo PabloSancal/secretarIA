@@ -3,7 +3,6 @@ import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 
 import { promisify } from 'util';
-import { error } from 'console';
 
 // Receives message
 // Return IV+EncryptedMessage
@@ -21,7 +20,7 @@ export class CryptoUtils {
     }
 
     if (secretKey.length != 32) {
-      throw new error('MESSAGE_KEY must be 32 characters long');
+      throw new Error('MESSAGE_KEY must be 32 characters long');
     }
 
     this.key = Buffer.from(secretKey, 'hex');
