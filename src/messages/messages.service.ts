@@ -1,14 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class MessagesService {
+export class MessagesService extends PrismaClient implements OnModuleInit {
+
+    private logger = new Logger();
+
+    async onModuleInit() {
+        await this.$connect();
+    }
 
 
     async createMessage(userId: string, messageText: string) {
         try {
-            
+            await this.message.create({
+                data: {
+                    messageText: messageText,
+                    userId: userId,
+                    Date: new Date()
+                }
+            })
+
         } catch (error) {
-            
+            this.logger.error(`Unexpected error while creating message - ${error}`)
+            throw error;
         }
     }
 }
