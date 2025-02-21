@@ -19,11 +19,11 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
     async createMessage(userId: string, messageText: string) {
         try {
 
-            messageText = this.cryptoService.encryptMessage(messageText);
+            let messageBuffer = this.cryptoService.encryptMessage(messageText);
             console.log({ messageText })
             const newMessage = await this.message.create({
                 data: {
-                    messageText: messageText,
+                    messageText: messageBuffer.toString('hex'),
                     userId: userId,
                     Date: new Date()
                 }
