@@ -1,43 +1,20 @@
 # 🤝 Contributing to SecretarIA
 
-Thank you for your interest in contributing to **SecretarIA**. Your contributions help enhance the quality and functionality of this project. Please adhere to the following guidelines to ensure a structured and efficient contribution process.
+Thank you for your interest in contributing to **SecretarIA**! Your contributions help enhance the quality and functionality of this project. Please follow these guidelines to ensure a smooth and effective contribution process.
 
-## 🛠 Development Setup
-
-### Prerequisites
-Ensure the following dependencies are installed:
-- **Node.js** (>= 16)
-- **npm**
-- **Docker & Docker Compose** (for database containerization)
-- **Google Chrome** (for automation compatibility)
-
-### Installation
-```sh
-git clone https://github.com/your-username/SecretarIA.git
-cd SecretarIA
-npm install
-```
-
-### Configuration
-Create a `.env` file in the root directory with the following environment variables:
-```ini
-PORT=3000
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=postgresDb
-DATABASE_URL="postgresql://postgres:123456@localhost:5432/postgresDb?schema=public"
-MESSAGE_KEY='yourSecureMessageKey'
-```
-
-### Running the Application
-```sh
-npm run start
-```
+---
 
 ## 🔄 Contribution Workflow
 
+1. **Fork the repository** and clone it to your local environment.
+2. **Create a new branch** for your feature or fix:
+   ```sh
+   git checkout -b feature/your-feature-name
+   ```
+
 1. **Fork the repository** and clone it locally.
 2. **Create a new branch** for your feature or fix:
+   
    ```sh
    git checkout -b featureName
    ```
@@ -69,7 +46,7 @@ npm run start
 - Keep PRs **concise and topic-focused** to streamline review processes.
 
 ## 🛠 Reporting Issues
-If you encounter a bug, submit an [issue](https://github.com/your-username/SecretarIA/issues) including:
+If you encounter a bug, submit an [issue](https://github.com/pablosancal/SecretarIA/issues) including:
 - A **detailed problem description**.
 - Steps to **reproduce the issue**.
 - Expected vs. actual behavior.

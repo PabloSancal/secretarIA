@@ -204,4 +204,5 @@ This project is licensed under the **MIT License**.
 
 💡 **Feel free to use it or modify it for your own needs.** 🚀
 
-💡 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. 🤝✨
+💡 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. 🤝✨  
+For contribution guidelines, please check [CONTRIBUTING.md](CONTRIBUTING.md). 📜
