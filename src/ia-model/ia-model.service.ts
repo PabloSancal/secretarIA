@@ -21,7 +21,7 @@ export class IaModelService implements OnModuleInit {
         private readonly userService: UsersService,
         private configService: ConfigService
 
-    ) {}
+    ) { }
 
     async onModuleInit() {
         this.ensureModelFileExists();
@@ -66,12 +66,14 @@ export class IaModelService implements OnModuleInit {
     }
 
 
-    async getOllamaMessage(prompt: string, userId: string) {
+    async getOllamaMessage(prompt: string, profileId: string) {
         try {
-
-            const userMessages = await this.messageService.findAllUserMessages(userId)
+            const userMessages = await this.messageService.findAllUserMessages(profileId)
             userMessages.push({ role: 'user', content: prompt })
 
+            await this.messageService.createMessage(profileId, prompt)
+
+            console.log({ userMessages })
             const response = await ollama.chat({
                 model: this.modelName,
                 messages: userMessages,

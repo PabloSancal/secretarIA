@@ -35,6 +35,6 @@ model Profile {
   user    User      @relation("UserProfiles", fields: [userId], references: [id], onDelete: Cascade)
   Message Message[] @relation("ProfileMessages")
 
-  @@unique([userId, number])
+  @@unique([userId, number], name: "userId_number")
   @@index([userId, number])
 }

@@ -59,17 +59,17 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
-    async getUserIdByNumber(phoneNumber?: string){
-        try{
-            if(!phoneNumber)
+    async getUserIdByNumber(phoneNumber?: string) {
+        try {
+            if (!phoneNumber)
                 throw new Error('You must provide the phone number');
             const userId = await this.user.findMany({
-                where:{
+                where: {
                     phoneNumber: phoneNumber,
                 }
             });
             return userId;
-        }catch(error){
+        } catch (error) {
             this.logger.error(`Unexpected error while searching UserId - ${error}`);
         }
     }
@@ -111,6 +111,15 @@ export class UsersService extends PrismaClient implements OnModuleInit {
                 }
             });
 
+            await this.user.update({
+                data: {
+                    currentProfile: profile.id,
+                },
+                where: {
+                    id: userId,
+                }
+            })
+
             return profile;
 
         } catch (error) {
@@ -121,6 +130,7 @@ export class UsersService extends PrismaClient implements OnModuleInit {
 
     async getAllProfiles(userId: string) {
         try {
+            console.log({ userId })
             const userProfiles = await this.profile.findMany({
                 where: {
                     userId: userId,
@@ -140,21 +150,56 @@ export class UsersService extends PrismaClient implements OnModuleInit {
             if (!phoneNumber) {
                 throw new Error('You must provide the phone number');
             }
-    
+
             const updatedUser = await this.user.update({
                 where: {
                     phoneNumber: phoneNumber,
                 },
                 data: {
-                    name: newName, 
+                    name: newName,
                 },
             });
-    
+
             return updatedUser;
 
         } catch (error) {
             this.logger.error(`Error changing user name - ${error}`);
             throw new Error('Failed to update user name');
+        }
+    }
+
+    /**
+     * Removes a user by ID or phone number.
+     * @returns The removed user object.
+     */
+    async removeProfile(profileNumber: number, userId: string) {
+        try {
+            const profileFound = await this.profile.findUnique({
+                where: {
+                    userId_number: {
+                        userId: userId,
+                        number: profileNumber,
+                    }
+                }
+            })
+
+            if (!profileFound) {
+                return `👩🏻‍💼 El perfil indicado no existe`
+            }
+
+            const profileRemoved = await this.profile.delete({
+                where: {
+                    userId_number: {
+                        userId: userId,
+                        number: profileNumber,
+                    }
+                }
+            });
+
+            return `👩🏻‍💼 Perfil borrado exitosamente `;
+        } catch (error) {
+            this.logger.error(`Unexpected error while removing users - ${error}`);
+            throw error;
         }
     }
 }
