@@ -29,8 +29,34 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
+    async findUser(phoneNumber?: string, userId?: string) {
+        try {
+            if (!userId && !phoneNumber) {
+                throw new Error('You must provide the user ID or the phone number')
+            }
+
+            const userFound = await this.user.findUnique({
+                where: {
+                    phoneNumber: phoneNumber,
+                    id: userId,
+                }
+            })
+
+            return userFound;
+
+        } catch (error) {
+            this.logger.error(`Unexpected error while finding users - ${error}`);
+            throw error;
+        }
+    }
+
+
     async removeUser(userId?: string, phoneNumber?: string) {
         try {
+            if (!userId && !phoneNumber) {
+                throw new Error('You must provide the user ID or the phone number')
+            }
+
             const userRemoved = await this.user.delete({
                 where: {
                     phoneNumber: phoneNumber,

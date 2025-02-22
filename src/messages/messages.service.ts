@@ -39,8 +39,6 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
 
     async findAllUserMessages(userId: string) {
         try {
-            //Todo: comprobar que user existe con userdb
-
             const messages = await this.message.findMany({
                 where: {
                     userId: userId
@@ -49,8 +47,8 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
 
             const messagesFound = messages.map(message => {
                 return {
-                    ...message,
-                    messageText: this.cryptoService.decryptMessage(message.messageText),
+                    role: 'user',
+                    content: this.cryptoService.decryptMessage(message.messageText)
                 }
             })
 
