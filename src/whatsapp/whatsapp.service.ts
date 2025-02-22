@@ -90,22 +90,46 @@ export class WhatsappService implements OnModuleInit {
             );
             break;
 
-          case '!remove':
-            const deletedUser = await this.userService.removeUser(phoneNumber)
-            return msg.reply(`${deletedUser.name} - ${deletedUser.phoneNumber} ha sido borrado.`)
+            case '!remove':
+              const deletedUser = await this.userService.removeUser(phoneNumber);
+              return msg.reply(`🚫 *${deletedUser.name}* con número 📞 *${deletedUser.phoneNumber}* ha sido eliminado correctamente.`);
+      
+            case '!username':
+              if (!message)
+                return msg.reply('⚠️ *Debes especificar un nuevo nombre de usuario.*\n\n📝 Ejemplo: `!username Pablo`');
+                const userName = await this.userService.changeName(message, phoneNumber);
+                return msg.reply(`✅ *Nombre de usuario actualizado con éxito a:* *${message}* 🎉`);
+      
+            case '!message':
+              if (!message) {
+                return msg.reply('💬 *Debes escribir un mensaje para hablar con la secretaria.*\n\n📌 Ejemplo: `!message Hola, ¿qué tal?`');
+              }
+              const reply = await this.iaModelService.getOllamaMessage(message, userFound.id);
+              return msg.reply(`🤖 *Respuesta de la secretaria IA:*\n${reply}`);
+      
+              case '!perfil':
+                if (!message) {
+                    const profiles = await this.userService.getAllProfiles(userFound.id);
+                    return msg.reply(`Perfiles: ${profiles}`);
+                }
+            
+                const regex = /^!perfil\s+-n\s+(\d+)$/;
+            
+                const match = message.match(regex);
+                
+                if (!match) {
+                    return msg.reply('Formato incorrecto. Usa: !perfil -n <número>');
+                }
+            
+                const numero = parseInt(match[1], 10);
+            
+                return msg.reply(`Número ingresado: ${numero}`);
+            
 
-          case '!username':
-            const userName = await this.userService.changeName(message, phoneNumber);
-            return msg.reply('Nombre de usuario cambiado.');
-
-          case '!message':
-            const reply = await this.iaModelService.getOllamaMessage(message, userFound.id);
-            return msg.reply(reply);
-
-          default:
-            msg.reply('Comando no reconocido, usa !help para ver la lista de comandos.');
-            break;
-        }
+            default:
+              msg.reply('❌ *Comando no reconocido.*\n🤖 Usa `!help` para ver la lista de comandos disponibles.');
+              break;
+            }
       }
     });
 
