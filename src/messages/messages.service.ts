@@ -25,30 +25,16 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
         await this.$connect();
     }
 
-<<<<<<< HEAD
     async createMessage(profileId: string, messageText: string) {
-=======
-    /**
-     * @brief Creates a new message, encrypting its content before storing.
-     * @returns The newly created message, including the encrypted message text.
-     */
-    async createMessage(userId: string, messageText: string) {
->>>>>>> main
         try {
             // Encrypt the message text before saving it to the database
             let messageBuffer = this.cryptoService.encryptMessage(messageText);
             console.log({ messageText })
             const newMessage = await this.message.create({
                 data: {
-<<<<<<< HEAD
                     messageText: messageBuffer.toString('hex'),
                     profileId: profileId,
                     Date: new Date()
-=======
-                    messageText: messageBuffer.toString('hex'),  
-                    userId: userId,
-                    Date: new Date() 
->>>>>>> main
                 }
             });
 
@@ -60,15 +46,7 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
         }
     }
 
-<<<<<<< HEAD
     async findAllUserMessages(profileId: string) {
-=======
-    /**
-     * @brief Retrieves all messages for a specific user, decrypting the message text before returning.
-     * @returns A list of messages, including the decrypted message text.
-     */
-    async findAllUserMessages(userId: string) {
->>>>>>> main
         try {
             // Fetch all messages for the given user from the database
             const messages = await this.message.findMany({
