@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Client, LocalAuth } from 'whatsapp-web.js';
 import { MessagesService } from '../messages/messages.service';
+import { IaModelService } from 'src/ia-model/ia-model.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
@@ -15,7 +17,8 @@ export class WhatsappService implements OnModuleInit {
     constructor(
         private eventEmitter: EventEmitter2,
         private configService: ConfigService,
-        private messagesService: MessagesService,
+        private iaModelService: IaModelService,
+        private userService: UsersService,
     ) { }
 
     onModuleInit() {
@@ -32,18 +35,27 @@ export class WhatsappService implements OnModuleInit {
             this.logger.log("Conexión exitosa !!");
         });
 
-        this.client.on('message', (msg) => {
+        this.client.on('message', async (msg) => {
             this.logger.verbose(`${msg.from}: ${msg.body}`);
+            const phoneNumber = msg.from.split('@')[0];
+            let userFound = await this.userService.findUser(phoneNumber);
 
-            const command = msg.body.match(/^!(\S*)/);
+            if (!userFound) {
+                userFound = await this.userService.createUser(phoneNumber)
+            }
+
+                const command = msg.body.match(/^!(\S*)/);
             if (command && msg.body.charAt(0) === '!') {
+                if (command[0] === '!name') {
+                    //TODO: actualizar name de user
 
-                if (command[0] === '!hi') {
+                } else if (command[0] === '!hi') {
                     msg.reply('Buenas y santas');
 
                 } else if (command[0] === '!message') {
                     const message = msg.body.slice(command[0].length + 1)
-                    this.messagesService.createMessage('a2946dce-4719-40f8-97e8-95121b8230b6', message)
+                    const reply = await this.iaModelService.getOllamaMessage(message, userFound.id)
+                    return msg.reply(reply)
                 }
 
             }
