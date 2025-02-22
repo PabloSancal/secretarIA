@@ -103,4 +103,28 @@ export class UsersService extends PrismaClient implements OnModuleInit {
             throw error;
         }
     }
+
+    async changeName(newName: string, phoneNumber?: string) {
+        try {
+            if (!phoneNumber) {
+                throw new Error('You must provide the phone number');
+            }
+    
+            const updatedUser = await this.user.update({
+                where: {
+                    phoneNumber: phoneNumber,
+                },
+                data: {
+                    name: newName, 
+                },
+            });
+    
+            return updatedUser;
+    
+        } catch (error) {
+            this.logger.error(`Error changing user name - ${error}`);
+            throw new Error('Failed to update user name');
+        }
+    }
+    
 }
