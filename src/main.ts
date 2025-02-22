@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import { RecordatoriosModule } from './recordatorios/recordatorios.module';
+import { RecordatoriosService } from './recordatorios/recordatorios.service';
 /**
  * Entry point for the NestJS application.
  */
@@ -11,6 +13,8 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService); 
   const port = configService.get<number>('PORT', 3015); 
+
+  app.get(RecordatoriosService);
 
   await app.listen(port); 
 
