@@ -81,12 +81,10 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
-<<<<<<< HEAD
     /**
      * Updates a user's name by phone number.
      * @returns The updated user object.
      */
-=======
     async createProfile(userId: string, profileNumber: number) {
         try {
             const profile = await this.profile.create({
@@ -120,7 +118,6 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
->>>>>>> main
     async changeName(newName: string, phoneNumber?: string) {
         try {
             if (!phoneNumber) {
