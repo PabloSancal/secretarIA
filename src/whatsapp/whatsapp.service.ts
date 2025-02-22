@@ -8,18 +8,28 @@ import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
+  private client: Client = new Client({
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+      product: 'chrome',
+      executablePath: '/usr/bin/chromium-browser',
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless'],
+    },  
+  });
 
-    private client: Client = new Client({
-        authStrategy: new LocalAuth(),
-    });
     private readonly logger = new Logger(WhatsappService.name);
 
-    constructor(
-        private eventEmitter: EventEmitter2,
-        private configService: ConfigService,
-        private iaModelService: IaModelService,
-        private userService: UsersService,
-    ) { }
+
+  
+  constructor(
+    private eventEmitter: EventEmitter2,
+    private configService: ConfigService,
+    private messagesService: MessagesService,
+    private iaModelService: IaModelService,
+    private userService: UsersService,
+    ) {};
+
+  
 
     onModuleInit() {
         this.client.on('qr', (qr) => {
@@ -47,10 +57,12 @@ export class WhatsappService implements OnModuleInit {
                 const command = msg.body.match(/^!(\S*)/);
             if (command && msg.body.charAt(0) === '!') {
                 if (command[0] === '!name') {
-                    //TODO: actualizar name de user
+                    
 
-                } else if (command[0] === '!hi') {
-                    msg.reply('Buenas y santas');
+                } else if (command[0] === '!username') {
+                    const message = msg.body.slice(command[0].length + 1)
+                    const userName = await this.userService.changeName(message,phoneNumber)
+                    return msg.reply(userName.name)
 
                 } else if (command[0] === '!message') {
                     const message = msg.body.slice(command[0].length + 1)
