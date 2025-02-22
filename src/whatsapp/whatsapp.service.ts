@@ -42,6 +42,7 @@ export class WhatsappService implements OnModuleInit {
 
   };
 
+
   /**
    * Lifecycle hook that initializes the WhatsApp client and sets up event listeners.
    */
@@ -65,10 +66,20 @@ export class WhatsappService implements OnModuleInit {
       const phoneNumber = msg.from.split('@')[0];
       let userFound = await this.userService.findUser(phoneNumber);
 
-      console.log(userFound);
       if (!userFound) {
         userFound = await this.userService.createUser(phoneNumber);
       }
+
+      if (!userFound.currentProfile) {
+        let userProfiles = await this.userService.getAllProfiles(userFound.id)
+
+        if (userProfiles.length === 0) {
+          userFound.currentProfile = (await this.userService.createProfile(userFound.id, 1)).id;
+        } else {
+          userFound.currentProfile = userProfiles[0].id
+        }
+      }
+
 
       const command = msg.body.match(/^!(\S*)/);
 
@@ -90,49 +101,67 @@ export class WhatsappService implements OnModuleInit {
             );
             break;
 
-            case '!remove':
-              const deletedUser = await this.userService.removeUser(phoneNumber);
-              return msg.reply(`🚫 *${deletedUser.name}* con número 📞 *${deletedUser.phoneNumber}* ha sido eliminado correctamente.`);
-      
-            case '!username':
-              if (!message)
-                return msg.reply('⚠️ *Debes especificar un nuevo nombre de usuario.*\n\n📝 Ejemplo: `!username Pablo`');
-                const userName = await this.userService.changeName(message, phoneNumber);
-                return msg.reply(`✅ *Nombre de usuario actualizado con éxito a:* *${message}* 🎉`);
-      
-            case '!message':
-              if (!message) {
-                return msg.reply('💬 *Debes escribir un mensaje para hablar con la secretaria.*\n\n📌 Ejemplo: `!message Hola, ¿qué tal?`');
-              }
-              const reply = await this.iaModelService.getOllamaMessage(message, userFound.id);
-              return msg.reply(`🤖 *Respuesta de la secretaria IA:*\n${reply}`);
-      
-              case '!perfil':
-                if (!message) {
-                    const profiles = await this.userService.getAllProfiles(userFound.id);
-                    return msg.reply(`Perfiles: ${profiles}`);
-                }
-            
-                const regex = /^!perfil\s+-n\s+(\d+)$/;
-            
-                const match = message.match(regex);
-                
-                if (!match) {
-                    return msg.reply('Formato incorrecto. Usa: !perfil -n <número>');
-                }
-            
-                const numero = parseInt(match[1], 10);
-            
-                return msg.reply(`Número ingresado: ${numero}`);
-            
+          case '!remove':
+            const deletedUser = await this.userService.removeUser(phoneNumber);
+            return msg.reply(`🚫 *${deletedUser.name}* con número 📞 *${deletedUser.phoneNumber}* ha sido eliminado correctamente.`);
 
-            default:
-              msg.reply('❌ *Comando no reconocido.*\n🤖 Usa `!help` para ver la lista de comandos disponibles.');
-              break;
+          case '!username':
+            if (!message)
+              return msg.reply('⚠️ *Debes especificar un nuevo nombre de usuario.*\n\n📝 Ejemplo: `!username Pablo`');
+            const userName = await this.userService.changeName(message, phoneNumber);
+            return msg.reply(`✅ *Nombre de usuario actualizado con éxito a:* *${message}* 🎉`);
+
+          case '!perfil':
+            if (!message) {
+              const profiles = await this.userService.getAllProfiles(userFound.id);
+              let msgPerfiles = `Perfiles: \n`
+              profiles.forEach(profile => (
+                msgPerfiles += `${userFound.currentProfile === profile.id ? '*' : ''} Perfil ${profile.number}\n`
+              ));
+
+              return msg.reply(msgPerfiles);
             }
+
+            const profileFlags = this.parseProfileFlags(message);
+            console.log({ profileFlags })
+            if (!profileFlags?.profileNumber) {
+              return msg.reply('Formato incorrecto. Usa: !perfil -<número>');
+            }
+
+            const numero = profileFlags.profileNumber;
+
+            if (!profileFlags.deleteProfile) {
+              await this.userService.createProfile(userFound.id, numero);
+              return msg.reply(`Nuevo perfil: ${numero}`);
+            }
+
+            const replyRemoveMsg = await this.userService.removeProfile(numero, userFound.id);
+
+            return msg.reply(replyRemoveMsg)
+
+          default:
+            msg.reply('❌ *Comando no reconocido.*\n 👩🏻‍💼 Usa `!help` para ver la lista de comandos disponibles.');
+            break;
+        }
+      } else {
+        const reply = await this.iaModelService.getOllamaMessage(msg.body, userFound.currentProfile);
+        return msg.reply(`👩🏻‍💼 \n${reply}`);
       }
+
     });
 
     this.client.initialize();
+  }
+
+  // Detecta las flags de !perfil, si detencta un numero y si detecta la flag de borrado
+  parseProfileFlags(flags: string) {
+    const profileRegex = /^\s*-(\d+)(?:\s+-b)?\s*$/
+    const match = flags.match(profileRegex);
+    if (!match) return null;
+
+    return {
+      profileNumber: parseInt(match[1]),
+      deleteProfile: flags.includes("-b")
+    };
   }
 }

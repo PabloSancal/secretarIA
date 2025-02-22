@@ -16,12 +16,15 @@ model Message {
 }
 
 model User {
-  id          String    @id @default(uuid()) @db.Uuid
-  name        String
-  phoneNumber String    @unique()
-  Profile     Profile[] @relation("UserProfiles")
+  id             String  @id @default(uuid()) @db.Uuid
+  name           String
+  phoneNumber    String  @unique()
+  currentProfile String? @unique() @db.Uuid
+
+  profiles Profile[] @relation("UserProfiles")
 
   @@index([phoneNumber])
+  @@index([currentProfile])
 }
 
 model Profile {
@@ -29,9 +32,9 @@ model Profile {
   userId String @db.Uuid
   number Int
 
+  user    User      @relation("UserProfiles", fields: [userId], references: [id], onDelete: Cascade)
   Message Message[] @relation("ProfileMessages")
-  User    User      @relation("UserProfiles", fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, number])
+  @@unique([userId, number], name: "userId_number")
   @@index([userId, number])
 }
