@@ -123,7 +123,7 @@ export class WhatsappService implements OnModuleInit {
             }
 
             const profileFlags = this.parseProfileFlags(message);
-            console.log({ profileFlags })
+
             if (!profileFlags?.profileNumber) {
               return msg.reply('Formato incorrecto. Usa: !perfil -<número>');
             }

@@ -21,7 +21,8 @@ model User {
   phoneNumber    String  @unique()
   currentProfile String? @unique() @db.Uuid
 
-  profiles Profile[] @relation("UserProfiles")
+  profiles Profile[]  @relation("UserProfiles")
+  Reminder Reminder[] @relation("UserReminders")
 
   @@index([phoneNumber])
   @@index([currentProfile])
@@ -37,4 +38,15 @@ model Profile {
 
   @@unique([userId, number], name: "userId_number")
   @@index([userId, number])
+}
+
+model Reminder {
+  id     String   @id @default(uuid()) @db.Uuid
+  name   String
+  date   DateTime
+  userId String   @db.Uuid
+
+  user User @relation("UserReminders", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([date])
 }
