@@ -14,15 +14,15 @@ export class CryptoUtils {
   constructor(private configService: ConfigService) {
     const secretKey = this.configService.get<string>('MESSAGE_KEY')?.trim();
 
-if (!secretKey) {
-  throw new Error('MESSAGE_KEY not defined in .env');
-}
+    if (!secretKey) {
+      throw new Error('MESSAGE_KEY not defined in .env');
+    }
 
-if (secretKey.length !== 64) { 
-  throw new Error('MESSAGE_KEY must be 64 hex characters (32 bytes)');
-}
+    if (secretKey.length !== 64) {
+      throw new Error('MESSAGE_KEY must be 64 hex characters (32 bytes)');
+    }
 
-this.key = createHash('sha256').update(String(this.key)).digest('hex').substring(0,32)
+    this.key = createHash('sha256').update(String(this.key)).digest('hex').substring(0, 32)
 
   }
 
@@ -47,9 +47,9 @@ this.key = createHash('sha256').update(String(this.key)).digest('hex').substring
 
   decryptMessage(message: string) {
 
-    const messageBuffer = Buffer.from(message,'hex');
+    const messageBuffer = Buffer.from(message, 'hex');
 
-    const iv = messageBuffer.slice(0,12)
+    const iv = messageBuffer.slice(0, 12)
 
     const cryptedMessage = messageBuffer.slice(12);
 

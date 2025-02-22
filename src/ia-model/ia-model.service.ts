@@ -1,6 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { exec, execSync } from 'child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { ConfigService } from '@nestjs/config';
+import { execSync } from 'child_process';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import ollama from 'ollama'
 import { join } from 'path';
 import { MessagesService } from 'src/messages/messages.service';
@@ -18,9 +19,9 @@ export class IaModelService implements OnModuleInit {
     constructor(
         private readonly messageService: MessagesService,
         private readonly userService: UsersService,
+        private configService: ConfigService
 
-    ) {
-    }
+    ) {}
 
     async onModuleInit() {
         this.ensureModelFileExists();
@@ -35,11 +36,9 @@ export class IaModelService implements OnModuleInit {
             if (!existsSync(this.modelfileDirPath)) {
                 mkdirSync(this.modelfileDirPath, { recursive: true });
             }
-            
+
             console.log(this.modelfilePath)
-            const modelContent = `FROM deepseek-r1:7b
-SYSTEM Eres una secretaria virtual altamente competente, dedicada y atenta a cada detalle. Tu propósito es anticiparte a las necesidades de tu usuario, ofreciendo asistencia inmediata en cualquier tipo de solicitud con una actitud profesional, encantadora y siempre dispuesta a servir. Si te piden que hagas algun recordatorio, devuelve un mensaje con el siguiente formato: "!recordatorio [nombre recordatorio] [HH:DD:MM]. 
-`;
+            const modelContent = this.configService.get<string>('MODEL_CONTEXT')!;
 
             writeFileSync(`${this.modelfileDirPath}deepseek-assistant.ModelFile`, modelContent);
         }
