@@ -1,24 +1,25 @@
-2025/02/22-06:36:53.552 7346 Reusing MANIFEST /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/02/22-06:36:53.552 7346 Recovering log #421
-2025/02/22-06:36:53.556 7346 Reusing old log /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000421.log 
-2025/02/22-06:36:54.908 7346 Level-0 table #427: started
-2025/02/22-06:36:54.921 7346 Level-0 table #427: 190413 bytes OK
-2025/02/22-06:36:54.934 7346 Delete type=0 #421
-2025/02/22-06:36:54.935 7344 Manual compaction at level-0 from '\x00\x92\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x93\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/02/22-06:36:54.935 7346 Level-0 table #429: started
-2025/02/22-06:36:54.943 7346 Level-0 table #429: 437 bytes OK
-2025/02/22-06:36:54.956 7346 Delete type=0 #426
-2025/02/22-06:36:54.956 7344 Manual compaction at level-0 from '\x00\x93\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x94\x00\x00\x00' @ 0 : 0; will stop at '\x00\x93\x00\x00\x05' @ 368400 : 0
-2025/02/22-06:36:54.956 7344 Compacting 1@0 + 1@1 files
-2025/02/22-06:36:54.966 7344 Generated table #430@0: 3913 keys, 89025 bytes
-2025/02/22-06:36:54.966 7344 Compacted 1@0 + 1@1 files => 89025 bytes
-2025/02/22-06:36:54.980 7344 compacted to: files[ 0 1 1 0 0 0 0 ]
-2025/02/22-06:36:54.980 7344 Delete type=2 #429
-2025/02/22-06:36:54.980 7344 Manual compaction at level-0 from '\x00\x93\x00\x00\x05' @ 368400 : 0 .. '\x00\x94\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/02/22-06:36:56.081 7345 Compacting 1@1 + 1@2 files
-2025/02/22-06:36:56.112 7345 Generated table #431@1: 19431 keys, 667713 bytes
-2025/02/22-06:36:56.112 7345 Compacted 1@1 + 1@2 files => 667713 bytes
-2025/02/22-06:36:56.125 7345 compacted to: files[ 0 0 1 0 0 0 0 ]
-2025/02/22-06:36:56.125 7345 Delete type=2 #424
-2025/02/22-06:36:56.126 7345 Delete type=2 #427
-2025/02/22-06:36:56.126 7345 Delete type=2 #430
+2025/02/22-16:10:24.113 647c Reusing MANIFEST /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/02/22-16:10:24.113 647c Recovering log #816
+2025/02/22-16:10:24.125 647c Reusing old log /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000816.log 
+2025/02/22-16:10:24.125 647c Delete type=2 #815
+2025/02/22-16:10:25.494 6491 Level-0 table #821: started
+2025/02/22-16:10:25.518 6491 Level-0 table #821: 461537 bytes OK
+2025/02/22-16:10:25.531 6491 Delete type=0 #816
+2025/02/22-16:10:25.532 647a Manual compaction at level-0 from '\x00y\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00z\x00\x00\x00' @ 0 : 0; will stop at '\x00z\x00\x00\x05' @ 174193 : 1
+2025/02/22-16:10:25.532 647a Compacting 1@0 + 1@1 files
+2025/02/22-16:10:25.610 647a Generated table #822@0: 67960 keys, 1401232 bytes
+2025/02/22-16:10:25.610 647a Compacted 1@0 + 1@1 files => 1401232 bytes
+2025/02/22-16:10:25.627 647a compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/02/22-16:10:25.628 647a Delete type=2 #821
+2025/02/22-16:10:25.628 647a Manual compaction at level-0 from '\x00z\x00\x00\x05' @ 174193 : 1 .. '\x00z\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/02/22-16:10:25.635 647a Level-0 table #824: started
+2025/02/22-16:10:25.643 647a Level-0 table #824: 436 bytes OK
+2025/02/22-16:10:25.660 647a Delete type=2 #818
+2025/02/22-16:10:25.660 647a Delete type=0 #820
+2025/02/22-16:10:25.661 647a Manual compaction at level-0 from '\x00z\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00{\x00\x00\x00' @ 0 : 0; will stop at '\x00z\x00\x00\x05' @ 174226 : 0
+2025/02/22-16:10:25.661 647a Compacting 1@0 + 1@1 files
+2025/02/22-16:10:25.737 647a Generated table #825@0: 67958 keys, 1401221 bytes
+2025/02/22-16:10:25.737 647a Compacted 1@0 + 1@1 files => 1401221 bytes
+2025/02/22-16:10:25.750 647a compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/02/22-16:10:25.750 647a Delete type=2 #824
+2025/02/22-16:10:25.750 647a Manual compaction at level-0 from '\x00z\x00\x00\x05' @ 174226 : 0 .. '\x00{\x00\x00\x00' @ 0 : 0; will stop at (end)

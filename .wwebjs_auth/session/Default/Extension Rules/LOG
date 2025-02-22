@@ -1,2 +1,3 @@
-2025/02/22-05:59:38.306 66f6 Creating DB /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/Extension Rules since it was missing.
-2025/02/22-05:59:38.335 66f6 Reusing MANIFEST /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/Extension Rules/MANIFEST-000001
+2025/02/22-15:47:18.878 4f4e Reusing MANIFEST /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/Extension Rules/MANIFEST-000001
+2025/02/22-15:47:18.878 4f4e Recovering log #3
+2025/02/22-15:47:18.878 4f4e Reusing old log /home/pablo-linux/secretarIA/.wwebjs_auth/session/Default/Extension Rules/000003.log 
