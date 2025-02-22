@@ -199,10 +199,14 @@ constructor(
 ```
 
 
-## 📜 License
-This project is licensed under the **MIT License**.
+## 📜 License  
 
-💡 **Feel free to use it or modify it for your own needs.** 🚀
+This project is licensed under the **MIT License**.  
 
-💡 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. 🤝✨  
-For contribution guidelines, please check [CONTRIBUTING.md](CONTRIBUTING.md). 📜
+📄 The full license text can be found in [LICENSE](LICENSE).  
+
+💡 **Feel free to use it or modify it for your own needs.** 🚀  
+
+🤝 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. ✨  
+
+For contribution guidelines, please check [CONTRIBUTING](CONTRIBUTING.md). 📜  
