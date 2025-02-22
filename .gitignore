@@ -2,8 +2,13 @@
 /dist
 /node_modules
 /build
+<<<<<<< HEAD
 /.wwbjs_auth
 /.wwbjs_cache
+=======
+/.wwebjs_auth
+/.wwebjs_cache
+>>>>>>> main
 
 # Logs
 logs

@@ -10,14 +10,28 @@ datasource db {
 model Message {
   id          String   @id @default(uuid()) @db.Uuid
   messageText String
-  userId      String  @db.Uuid
+  profileId   String   @db.Uuid
   Date        DateTime @default(now())
-  User        User     @relation("UserMessages", fields: [userId], references: [id], onDelete: Cascade)
+  Profile     Profile  @relation("ProfileMessages", fields: [profileId], references: [id], onDelete: Cascade)
 }
 
 model User {
   id          String    @id @default(uuid()) @db.Uuid
   name        String
   phoneNumber String    @unique()
-  Message     Message[] @relation("UserMessages")
+  Profile     Profile[] @relation("UserProfiles")
+
+  @@index([phoneNumber])
+}
+
+model Profile {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  number Int
+
+  Message Message[] @relation("ProfileMessages")
+  User    User      @relation("UserProfiles", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, number])
+  @@index([userId, number])
 }

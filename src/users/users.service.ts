@@ -81,10 +81,46 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Updates a user's name by phone number.
      * @returns The updated user object.
      */
+=======
+    async createProfile(userId: string, profileNumber: number) {
+        try {
+            const profile = await this.profile.create({
+                data: {
+                    userId: userId,
+                    number: profileNumber,
+                }
+            });
+
+            return profile;
+
+        } catch (error) {
+            this.logger.error(`Unexpected error while creating profiles - ${error}`);
+            throw error;
+        }
+    }
+
+    async getAllProfiles(userId: string) {
+        try {
+            const userProfiles = await this.profile.findMany({
+                where: {
+                    userId: userId,
+                }
+            });
+
+            return userProfiles;
+
+        } catch (error) {
+            this.logger.error(`Unexpected error while creating profiles - ${error}`);
+            throw error;
+        }
+    }
+
+>>>>>>> main
     async changeName(newName: string, phoneNumber?: string) {
         try {
             if (!phoneNumber) {
