@@ -42,6 +42,7 @@ export class WhatsappService implements OnModuleInit {
 
   };
 
+
   /**
    * Lifecycle hook that initializes the WhatsApp client and sets up event listeners.
    */
@@ -65,10 +66,18 @@ export class WhatsappService implements OnModuleInit {
       const phoneNumber = msg.from.split('@')[0];
       let userFound = await this.userService.findUser(phoneNumber);
 
-      console.log(userFound);
       if (!userFound) {
         userFound = await this.userService.createUser(phoneNumber);
       }
+
+      if (!userFound.currentProfile) {
+        let userProfiles = await this.userService.getAllProfiles(userFound.id)
+
+        if (userProfiles.length === 0) {
+          userFound.currentProfile = (await this.userService.createProfile(userFound.id, 1)).id;
+        }
+      }
+
 
       const command = msg.body.match(/^!(\S*)/);
 
@@ -110,5 +119,17 @@ export class WhatsappService implements OnModuleInit {
     });
 
     this.client.initialize();
+  }
+
+  // Detecta las flags de !perfil, si detencta un numero y si detecta la flag de borrado
+  parseProfileFlags(flags: string) {
+    const profileRegex = '^\s*-(\d+)(?:\s+-b)?\s*$'
+    const match = flags.match(profileRegex);
+    if (!match) return null;
+
+    return {
+      profileNumber: parseInt(match[1]),
+      deleteProfile: flags.includes("-b")
+    };
   }
 }
