@@ -59,6 +59,23 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
+    async getUserIdByNumber(phoneNumber?: string){
+        try{
+            if(!phoneNumber)
+                throw new Error('You must provide the phone number');
+            const userId = await this.user.findMany({
+                where:{
+                    phoneNumber: phoneNumber,
+                }
+            });
+            return userId;
+        }catch(error){
+            this.logger.error(`Unexpected error while searching UserId - ${error}`);
+        }
+    }
+
+
+
     /**
      * Removes a user by ID or phone number.
      * @returns The removed user object.
