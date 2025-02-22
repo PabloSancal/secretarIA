@@ -16,7 +16,6 @@ export class IaModelService implements OnModuleInit {
 
 
     constructor(
-        // private readonly configService: ConfigService,
         private readonly messageService: MessagesService,
         private readonly userService: UsersService,
 

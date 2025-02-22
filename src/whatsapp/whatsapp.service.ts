@@ -1,37 +1,47 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Client, LocalAuth } from 'whatsapp-web.js';
+import { Client, ClientOptions, LocalAuth } from 'whatsapp-web.js';
 import { MessagesService } from '../messages/messages.service';
 import { IaModelService } from 'src/ia-model/ia-model.service';
 import { UsersService } from 'src/users/users.service';
+import * as os from 'os';
+
+
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
-  private client: Client = new Client({
-    authStrategy: new LocalAuth(),
-    puppeteer: {
-      product: 'chrome',
-      executablePath: '/usr/bin/chromium-browser',
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless'],
-    },  
-  });
-
+    private readonly isMacOS: boolean = os.platform() === 'darwin';
+    private client: Client;
     private readonly logger = new Logger(WhatsappService.name);
 
 
-  
-  constructor(
-    private eventEmitter: EventEmitter2,
-    private configService: ConfigService,
-    private messagesService: MessagesService,
-    private iaModelService: IaModelService,
-    private userService: UsersService,
-    ) {};
+    constructor(
+        private eventEmitter: EventEmitter2,
+        private configService: ConfigService,
+        private iaModelService: IaModelService,
+        private userService: UsersService,
+    ) {
+        const clientConfig: ClientOptions = {
+            authStrategy: new LocalAuth(),
+        };
 
-  
+        if (!this.isMacOS) {
+            clientConfig.puppeteer = {
+                product: 'chrome',
+                executablePath: '/usr/bin/chromium-browser',
+                args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless'],
+            };
+        }
+
+        this.client = new Client(clientConfig);
+
+    };
+
+
 
     onModuleInit() {
+
         this.client.on('qr', (qr) => {
             const port = this.configService.get<number>('PORT')
             const apiPath = this.configService.get<string>('API_URL')
@@ -64,7 +74,7 @@ export class WhatsappService implements OnModuleInit {
 
                 } else if (command[0] === '!username') {
                     const message = msg.body.slice(command[0].length + 1)
-                    const userName = await this.userService.changeName(message,phoneNumber)
+                    const userName = await this.userService.changeName(message, phoneNumber)
                     return msg.reply(userName.name)
 
                 } else if (command[0] === '!message') {

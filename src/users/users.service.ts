@@ -71,6 +71,39 @@ export class UsersService extends PrismaClient implements OnModuleInit {
         }
     }
 
+    async createProfile(userId: string, profileNumber: number) {
+        try {
+            const profile = await this.profile.create({
+                data: {
+                    userId: userId,
+                    number: profileNumber,
+                }
+            });
+
+            return profile;
+
+        } catch (error) {
+            this.logger.error(`Unexpected error while creating profiles - ${error}`);
+            throw error;
+        }
+    }
+
+    async getAllProfiles(userId: string) {
+        try {
+            const userProfiles = await this.profile.findMany({
+                where: {
+                    userId: userId,
+                }
+            });
+
+            return userProfiles;
+
+        } catch (error) {
+            this.logger.error(`Unexpected error while creating profiles - ${error}`);
+            throw error;
+        }
+    }
+
     async changeName(newName: string, phoneNumber?: string) {
         try {
             if (!phoneNumber) {
