@@ -1,108 +1,92 @@
 # 🤝 Contributing to SecretarIA
 
-Thank you for considering contributing to **SecretarIA**! We welcome all kinds of contributions, from fixing minor bugs to implementing new features and improving documentation. 🚀
+Thank you for your interest in contributing to **SecretarIA**. Your contributions help enhance the quality and functionality of this project. Please adhere to the following guidelines to ensure a structured and efficient contribution process.
 
-## 🛠 How to Contribute
+## 🛠 Development Setup
 
-### 1️⃣ Fork the Repository
-1. Navigate to the [SecretarIA GitHub repository](https://github.com/your-username/SecretarIA).
-2. Click on the **Fork** button in the top right corner.
-3. Clone your forked repository locally:
-   ```sh
-   git clone https://github.com/your-username/SecretarIA.git
-   cd SecretarIA
-   ```
-4. Add the original repository as a remote:
-   ```sh
-   git remote add upstream https://github.com/original-username/SecretarIA.git
-   ```
-
-### 2️⃣ Set Up the Development Environment
-Ensure you have the following prerequisites installed:
+### Prerequisites
+Ensure the following dependencies are installed:
 - **Node.js** (>= 16)
-- **npm** (Node Package Manager)
-- **Docker & Docker Compose** (optional for database setup)
-- **Google Chrome**
+- **npm**
+- **Docker & Docker Compose** (for database containerization)
+- **Google Chrome** (for automation compatibility)
 
-#### Install Dependencies
+### Installation
 ```sh
+git clone https://github.com/your-username/SecretarIA.git
+cd SecretarIA
 npm install
 ```
 
-#### Configure Environment Variables
-Create a `.env` file in the root directory and add:
+### Configuration
+Create a `.env` file in the root directory with the following environment variables:
 ```ini
 PORT=3000
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
-POSTGRES_DB=postgres-db
-DATABASE_URL="postgresql://postgres:123456@localhost:5432/postgres-db?schema=public"
-MESSAGE_KEY='your-secure-message-key'
+POSTGRES_DB=postgresDb
+DATABASE_URL="postgresql://postgres:123456@localhost:5432/postgresDb?schema=public"
+MESSAGE_KEY='yourSecureMessageKey'
 ```
 
-### 3️⃣ Run the Application
-To start the application locally:
+### Running the Application
 ```sh
 npm run start
 ```
-This will launch the NestJS server. If everything is set up correctly, you should see logs indicating that the server is running.
 
-### 4️⃣ Create a New Branch
-Always create a new branch for your work before making changes:
-```sh
-git checkout -b feature-name
-```
+## 🔄 Contribution Workflow
 
-### 5️⃣ Make Your Changes
-- Follow the existing **code style and structure**.
-- Ensure your changes **do not break existing functionality**.
-- Test your code before committing.
+1. **Fork the repository** and clone it locally.
+2. **Create a new branch** for your feature or fix:
+   ```sh
+   git checkout -b featureName
+   ```
+3. **Adhere to coding conventions**:
+   - Use **camelCase** for variables and functions.
+   - Use **PascalCase** for classes and components.
+   - Ensure **proper indentation and spacing**.
+   - Keep modules and functions **concise and single-responsibility**.
+4. **Thoroughly test your modifications** before committing.
+5. **Follow conventional commit standards:**
+   ```sh
+   git commit -m "feat: Implement new feature description"
+   ```
+6. **Push your branch** and submit a **Pull Request (PR)**.
 
-### 6️⃣ Commit and Push Changes
-```sh
-git add .
-git commit -m "Add new feature: description"
-git push origin feature-name
-```
+## 📋 Code Style and Best Practices
 
-### 7️⃣ Submit a Pull Request (PR)
-1. Go to your fork on GitHub.
-2. Click on **Compare & pull request**.
-3. Write a clear **title** and **description** for your PR.
-4. Submit the PR for review!
+- Follow **existing project conventions**.
+- **Commit messages must follow structured formatting:**
+  - `feat`: Introduces a new feature.
+  - `fix`: Resolves a bug.
+  - `docs`: Updates to documentation.
+  - `style`: Code formatting with no functional changes.
+  - `refactor`: Code restructuring without altering functionality.
+  - `perf`: Performance optimizations.
+  - `test`: Adds or improves tests.
+  - `chore`: General maintenance tasks (e.g., dependency updates).
+- Ensure **unit and integration tests pass** before submission.
+- Keep PRs **concise and topic-focused** to streamline review processes.
 
-## 📋 Contribution Guidelines
+## 🛠 Reporting Issues
+If you encounter a bug, submit an [issue](https://github.com/your-username/SecretarIA/issues) including:
+- A **detailed problem description**.
+- Steps to **reproduce the issue**.
+- Expected vs. actual behavior.
+- Screenshots or logs (if applicable).
 
-✔ Follow **clean code principles** and maintain readability.
-✔ Always **test your code** before submitting a PR.
-✔ Keep PRs **small and focused**—one feature/fix per PR.
-✔ Use **meaningful commit messages**.
-✔ Ensure all **dependencies are installed** before running the project.
-✔ Respect and follow the **code of conduct**.
+## 🚀 Feature Requests
+To propose new features, open a **feature request issue** with:
+- A detailed **feature description**.
+- A strong **justification for inclusion**.
+- Possible **implementation strategies**.
 
-## 🔍 Reporting Issues
-If you find a bug, please open an [issue](https://github.com/your-username/SecretarIA/issues) with:
-- A **clear description** of the problem.
-- Steps to **reproduce** the issue.
-- Expected and actual behavior.
-- Screenshots (if applicable).
-
-## 🌟 Feature Requests
-Have an idea for a feature? Open a **feature request issue** with:
-- A clear **explanation of the feature**.
-- Why it would be useful.
-- Potential implementation suggestions.
-
-## 🛡️ Code of Conduct
-All contributors must follow our [Code of Conduct](CODE_OF_CONDUCT.md). Be respectful, inclusive, and professional. 🤝
-
-## 🔗 Resources
+## 🔗 Additional Resources
 - [SecretarIA Repository](https://github.com/your-username/SecretarIA)
 - [NestJS Documentation](https://docs.nestjs.com/)
 - [WhatsApp Web.js Documentation](https://github.com/pedroslopez/whatsapp-web.js/)
 - [DeepSeek AI Models](https://deepseek.ai/)
 
-## 🎉 Thank You!
-Your contributions make **SecretarIA** better! 🚀
-Happy coding! 💻😃
+## 🎯 Final Notes
+All contributions undergo review prior to merging. Your efforts are highly valued—thank you for helping improve **SecretarIA**.
 
