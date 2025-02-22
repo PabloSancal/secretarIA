@@ -6,6 +6,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CryptoUtils } from './messages/CryptoUtils/CryptoUtils';
 import { UsersModule } from './users/users.module';
 import { IaModelModule } from './ia-model/ia-model.module';
+import { RecordatoriosModule } from './recordatorios/recordatorios.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { IaModelModule } from './ia-model/ia-model.module';
     EventEmitterModule.forRoot(),
     UsersModule,
     IaModelModule,
+    RecordatoriosModule,
   ],
   controllers: [],
   providers: [CryptoUtils],
