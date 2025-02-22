@@ -33,7 +33,7 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
         try {
             // Encrypt the message text before saving it to the database
             let messageBuffer = this.cryptoService.encryptMessage(messageText);
-            
+            console.log({ messageText })
             const newMessage = await this.message.create({
                 data: {
                     messageText: messageBuffer.toString('hex'),  
@@ -66,8 +66,8 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
             // Decrypt each message's text before returning it
             const messagesFound = messages.map(message => {
                 return {
-                    ...message,
-                    messageText: this.cryptoService.decryptMessage(message.messageText),  // Decrypt the message text
+                    role: 'user',
+                    content: this.cryptoService.decryptMessage(message.messageText)
                 }
             });
 
