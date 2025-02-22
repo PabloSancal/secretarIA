@@ -16,7 +16,7 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
         await this.$connect();
     }
 
-    async createMessage(userId: string, messageText: string) {
+    async createMessage(profileId: string, messageText: string) {
         try {
 
             let messageBuffer = this.cryptoService.encryptMessage(messageText);
@@ -24,7 +24,7 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
             const newMessage = await this.message.create({
                 data: {
                     messageText: messageBuffer.toString('hex'),
-                    userId: userId,
+                    profileId: profileId,
                     Date: new Date()
                 }
             });
@@ -37,11 +37,11 @@ export class MessagesService extends PrismaClient implements OnModuleInit {
         }
     }
 
-    async findAllUserMessages(userId: string) {
+    async findAllUserMessages(profileId: string) {
         try {
             const messages = await this.message.findMany({
                 where: {
-                    userId: userId
+                    profileId: profileId
                 }
             });
 
