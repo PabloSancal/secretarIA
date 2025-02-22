@@ -67,7 +67,10 @@ export class WhatsappService implements OnModuleInit {
             const command = msg.body.match(/^!(\S*)/);
             if (command && msg.body.charAt(0) === '!') {
                 if (command[0] === '!name') {
-
+                    //TODO: actualizar name de user
+                } else if (command[0] === '!hi') {
+                    msg.reply('Buenas y santas');
+                    
 
                 } else if (command[0] === '!username') {
                     const message = msg.body.slice(command[0].length + 1)
@@ -76,6 +79,7 @@ export class WhatsappService implements OnModuleInit {
 
                 } else if (command[0] === '!message') {
                     const message = msg.body.slice(command[0].length + 1)
+                    console.log('sending message to ollama...')
                     const reply = await this.iaModelService.getOllamaMessage(message, userFound.id)
                     return msg.reply(reply)
                 }
