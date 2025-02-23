@@ -216,7 +216,7 @@ export class WhatsappService implements OnModuleInit {
         }
       } else {
         const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`es dia ${new Date()}`), userFound.currentProfile));
-        console.log({ reply })
+
         const commandReply = reply.match(/^!(\S*)/);
 
         if (commandReply && reply.charAt(0) === '!' && commandReply[1] === 'recordatorio') {
@@ -225,10 +225,8 @@ export class WhatsappService implements OnModuleInit {
           if (commandReply) {
             const firstBracket = commandReply[2].trim();
             const secondBracket = commandReply[3].trim(); // [MM:DD:HH:MM]
-            console.log({ secondBracket })
 
             const matchDate = secondBracket.match(/(\d{2}):(\d{2}):(\d{2}):(\d{2})/);
-            console.log({ matchDate })
 
             const [, month, day, hour, minute] = matchDate!.map(Number);
 

@@ -131,7 +131,6 @@ export class UsersService extends PrismaClient implements OnModuleInit {
    */
   async getAllProfiles(userId: string) {
     try {
-      console.log({ userId });
       const userProfiles = await this.profile.findMany({
         where: {
           userId: userId,

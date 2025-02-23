@@ -38,7 +38,6 @@ export class IaModelService implements OnModuleInit {
             }
 
             const modelContent = this.configService.get<string>('MODEL_CONTEXT')!;
-            console.log({modelContent})
             writeFileSync(`${this.modelfileDirPath}deepseek-assistant.ModelFile`, modelContent);
         }
     }
@@ -71,13 +70,11 @@ export class IaModelService implements OnModuleInit {
 
             await this.messageService.createMessage(profileId, prompt)
 
-            console.log({ userMessages })
             const response = await ollama.chat({
                 model: this.modelName,
                 messages: userMessages,
             })
 
-            console.log(response.message.content)
             return response.message.content;
 
         } catch (error) {

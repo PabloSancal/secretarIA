@@ -20,7 +20,6 @@ export class PersonalityService {
   private loadQuestions() {
     try {
       const filePath = path.join(__dirname, '../../src/personality/questions.json');
-      console.log(filePath)
       const data = fs.readFileSync(filePath, 'utf8');
       this.questions = JSON.parse(data);
       this.logger.log('Preguntas de personalidad cargadas exitosamente.');
