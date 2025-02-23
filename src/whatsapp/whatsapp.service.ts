@@ -124,13 +124,13 @@ export class WhatsappService implements OnModuleInit {
               "❤️‍🩹 `!personalidad` - Test de personalidad que se aplica al contexto actual.\n" +
               "👤 `!perfil` - Muestra todos tus perfiles.\n" +
               "👤 `!perfil -n` - Crea un nuevo perfil (n es un número).\n" +
-              
+
               "❓ *Ejemplo de uso:*\n" +
               "👉 `Hola, ¿cómo estás?`\n" +
               "👉 `!username JuanPerez`\n" +
               "👉 `!recordatorios - Ver todos tus recordatorios`\n\n" +
               "⚡ _Escribe un comando y explora SecretarIA!_\n"
-                );
+            );
             break;
 
           case '!remove':
@@ -140,38 +140,46 @@ export class WhatsappService implements OnModuleInit {
             );
 
 
-            case '!perfil':
-              if (!message) {
-                const profiles = await this.userService.getAllProfiles(userFound.id);
-                let msgPerfiles = `*Perfiles:*\n`
-                profiles.forEach(profile => (
-                  msgPerfiles += `\n${userFound.currentProfile === profile.id ? '🟢' : ''} Perfil ${profile.number}`
-                ));
-  
-                return msg.reply(msgPerfiles);
-              }
-  
-              const profileFlags = this.parseProfileFlags(message);
-  
-              if (!profileFlags?.profileNumber) {
-                return msg.reply('Formato incorrecto. Usa: !perfil -<número>');
-              }
-  
-              const numero = profileFlags.profileNumber;
-  
-              if (!profileFlags.deleteProfile) {
+          case '!perfil':
+            const profiles = await this.userService.getAllProfiles(userFound.id);
+            if (!message) {
+              let msgPerfiles = `*Perfiles:*\n`
+              profiles.forEach(profile => (
+                msgPerfiles += `\n${userFound.currentProfile === profile.id ? '🟢' : ''} Perfil ${profile.number}`
+              ));
+
+              return msg.reply(msgPerfiles);
+            }
+
+            const profileFlags = this.parseProfileFlags(message);
+
+            if (!profileFlags?.profileNumber) {
+              return msg.reply('Formato incorrecto. Usa: !perfil -<número>');
+            }
+
+            const numero = profileFlags.profileNumber;
+
+            if (!profileFlags.deleteProfile) {
+              const profileFound = profiles.find(profile => profileFlags.profileNumber === profile.number)
+
+              if (profileFound) {
+                this.userService.changeProfile(profileFound.id, userFound.id)
+                return msg.reply(`Cambiando a perfil ${profileFound.number}`)
+              } else {
+
                 await this.userService.createProfile(userFound.id, numero);
                 return msg.reply(`Nuevo perfil: ${numero}`);
               }
-  
-              const replyRemoveMsg = await this.userService.removeProfile(
-                numero,
-                userFound.id,
-              );
-  
-              return msg.reply(replyRemoveMsg);
+            }
 
-            
+            const replyRemoveMsg = await this.userService.removeProfile(
+              numero,
+              userFound.id,
+            );
+
+            return msg.reply(replyRemoveMsg);
+
+
           case '!username':
             if (!message)
               return msg.reply(

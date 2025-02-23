@@ -176,6 +176,25 @@ export class UsersService extends PrismaClient implements OnModuleInit {
     }
   }
 
+  async changeProfile(currentProfile: string, userId: string) {
+    try {
+      const updatedProfile = await this.user.update({
+        data: {
+          currentProfile: currentProfile,
+        },
+        where: {
+          id: userId,
+        }
+      });
+
+      return updatedProfile;
+
+    } catch (error) {
+      this.logger.error(`Error changing user profile - ${error}`);
+      throw new Error('Failed to update user profile');
+    }
+  }
+
   /**
    * Removes a user by ID or phone number.
    * @returns The removed user object.
