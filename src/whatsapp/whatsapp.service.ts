@@ -89,7 +89,7 @@ export class WhatsappService implements OnModuleInit {
         if (quotedMsg.body === this.userQuestion) {
           const userEmotion = `The user responded to ${quotedMsg.body} feeling ${msg.body}`;
           this.messageService.createMessage(userFound.currentProfile, userEmotion);
-          return msg.reply(`🔍 Thank you for answering the question!`);
+          return msg.reply(`🔍 Gracias por responder la pregunta!`);
         }
       }
 
@@ -103,7 +103,7 @@ export class WhatsappService implements OnModuleInit {
             const questions = this.personalityService.getQuestions();
 
             if (!questions || questions.length === 0) {
-              return msg.reply('⚠️ No personality questions available at the moment.');
+              return msg.reply('⚠️ No hay preguntas de personalidad disponibles de momento ⌛️');
             }
 
             const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
