@@ -1,18 +1,22 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 @Injectable()
-export class RecordatoriosService extends PrismaClient implements OnModuleInit {
+export class RecordatoriosService {
     private readonly logger = new Logger(RecordatoriosService.name);
 
-    async onModuleInit() {
-        await this.$connect();
-    }
-
+    constructor(
+        private readonly prisma: PrismaService,
+        @Inject(forwardRef(() => WhatsappService))
+        private readonly whatsappService: WhatsappService,
+    ) { }
+    
     async createReminder(reminderName: string, reminderDate: Date, userId: string) {
         try {
-            const newReminder = await this.reminder.create({
+            reminderDate.setSeconds(0, 0);
+            const newReminder = await this.prisma.reminder.create({
                 data: {
                     name: reminderName,
                     date: reminderDate,
@@ -30,7 +34,7 @@ export class RecordatoriosService extends PrismaClient implements OnModuleInit {
 
     async removeReminder(reminderId: string) {
         try {
-            const removedReminder = await this.reminder.delete({
+            const removedReminder = await this.prisma.reminder.delete({
                 where: {
                     id: reminderId,
                 }
@@ -46,7 +50,7 @@ export class RecordatoriosService extends PrismaClient implements OnModuleInit {
 
     async findAllUserReminders(userId: string) {
         try {
-            const allReminders = await this.reminder.findMany({
+            const allReminders = await this.prisma.reminder.findMany({
                 where: {
                     userId: userId,
                 }
@@ -60,9 +64,33 @@ export class RecordatoriosService extends PrismaClient implements OnModuleInit {
         }
     }
 
-    async findAllReminders() {
+    //* El método obtiene los recordatorios 1 dia previo a la fecha, 10 minutos previos y a la hora.
+    async findAllReminders(currDate: Date) {
         try {
-            const allReminders = await this.reminder.findMany();
+            const targetHour = currDate.getHours();
+            const targetMinutes = currDate.getMinutes();
+
+            const previousDay = new Date(currDate);
+            previousDay.setDate(previousDay.getDate() - 1);
+
+            const oneDayBeforeExact = new Date(previousDay);
+            oneDayBeforeExact.setHours(targetHour, targetMinutes, 0, 0);
+
+            const tenMinutesBefore = new Date(oneDayBeforeExact);
+            tenMinutesBefore.setMinutes(tenMinutesBefore.getMinutes() - 10);
+
+            const exactNow = new Date(currDate);
+            exactNow.setSeconds(0, 0);
+
+            const allReminders = await this.prisma.reminder.findMany({
+                where: {
+                    OR: [
+                        { date: oneDayBeforeExact },
+                        { date: tenMinutesBefore },
+                        { date: exactNow }
+                    ]
+                }
+            });
 
             return allReminders;
 
@@ -72,37 +100,33 @@ export class RecordatoriosService extends PrismaClient implements OnModuleInit {
         }
     }
 
-  @Cron(CronExpression.EVERY_MINUTE)
-  async checkReminders() {
-    this.logger.log('🔎 Buscando recordatorios que deben notificarse...');
+    @Cron(CronExpression.EVERY_MINUTE)
+    async checkReminders() {
+        this.logger.log('🔎 Buscando recordatorios que deben notificarse...');
 
-    const now = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(now.getDate() + 1);
+        const now = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(now.getDate() + 1);
 
-    const reminders = await this.getRemindersForDate(tomorrow);
+        const reminders = await this.getRemindersForDate(now);
 
-    if (reminders.length > 0) {
-      this.logger.log(`📩 Hay ${reminders.length} recordatorios para enviar.`);
-      
-      await Promise.all(reminders.map(reminder =>
-        this.notifyUser(reminder.userId, reminder.message)
-      ));
+        if (reminders.length > 0) {
 
-      this.logger.log('✅ Recordatorios enviados correctamente.');
-    } else {
-      this.logger.log('✅ No hay recordatorios pendientes.');
+
+            await Promise.all(reminders.map(reminder =>
+                this.whatsappService.notifyUser(reminder.userId, `${reminder.name} - ${reminder.date}`)
+            ));
+
+            this.logger.log('✅ Recordatorios enviados correctamente.');
+        } else {
+            this.logger.log('✅ No hay recordatorios pendientes.');
+        }
     }
-  }
 
-  async getRemindersForDate(date: Date) {
-    return [
-      { userId: 1, message: '📅 Tienes una cita médica mañana a las 10 AM' },
-      { userId: 2, message: '📌 No olvides revisar el contrato mañana a las 3 PM' }
-    ];
-  }
+    async getRemindersForDate(date: Date) {
 
-  async notifyUser(userId: number, message: string) {
-    this.logger.log(`📩 Enviando notificación a usuario ${userId}: ${message}`);
-  }
+        return await this.findAllReminders(date)
+    }
+
+
 }

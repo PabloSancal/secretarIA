@@ -37,16 +37,14 @@ export class IaModelService implements OnModuleInit {
                 mkdirSync(this.modelfileDirPath, { recursive: true });
             }
 
-            console.log(this.modelfilePath)
             const modelContent = this.configService.get<string>('MODEL_CONTEXT')!;
-
+            console.log({modelContent})
             writeFileSync(`${this.modelfileDirPath}deepseek-assistant.ModelFile`, modelContent);
         }
     }
 
     private async createCustomModel() {
         try {
-            console.log({ Bf: this.modelfilePath, exist: existsSync(this.modelfilePath) })
             const modelfile = readFileSync(this.modelfilePath, 'utf8');
 
             const modelList = execSync('ollama list').toString();
