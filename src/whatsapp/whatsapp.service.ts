@@ -117,16 +117,16 @@ export class WhatsappService implements OnModuleInit {
 
           case '!help':
             msg.reply(
-              "🌟 *SecretarIA - Available Commands* 🌟\n\n" +
-              "📌 `!help` - Shows this list of commands.\n" +
-              "💬 `!message <text>` - Chat with the AI model.\n" +
-              "📝 `!username <name>` - Change your username.\n\n" +
-              "❓ *Usage example:*\n" +
-              "👉 `!message Hello, how are you?`\n" +
-              "👉 `!username JohnDoe`\n\n" +
-              "👉 `!recordatorios - View all your reminders`\n\n" +
-              "⚡ _Type a command and explore SecretarIA!_\n\n"
-            );
+              "🌟 *SecretarIA - Comandos Disponibles* 🌟\n\n" +
+              "📌 `!help` - Muestra esta lista de comandos.\n" +
+              "💬 `mensaje <texto>` - Chatea con el modelo de IA.\n" +
+              "📝 `!username <nombre>` - Cambia tu nombre de usuario.\n\n" +
+              "❓ *Ejemplo de uso:*\n" +
+              "👉 `!message Hola, ¿cómo estás?`\n" +
+              "👉 `!username JuanPerez`\n\n" +
+              "👉 `!recordatorios - Ver todos tus recordatorios`\n\n" +
+              "⚡ _Escribe un comando y explora SecretarIA!_\n\n"
+                );
             break;
 
           case '!remove':
