@@ -46,7 +46,6 @@ export class IaModelService implements OnModuleInit {
 
     private async createCustomModel() {
         try {
-            console.log({ Bf: this.modelfilePath, exist: existsSync(this.modelfilePath) })
             const modelfile = readFileSync(this.modelfilePath, 'utf8');
 
             const modelList = execSync('ollama list').toString();
