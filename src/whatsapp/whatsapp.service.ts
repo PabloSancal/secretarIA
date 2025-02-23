@@ -108,7 +108,7 @@ export class WhatsappService implements OnModuleInit {
 
             const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
 
-            this.userQuestion = `❓ ${randomQuestion.question}\nOptions: ${randomQuestion.options.join(', ')}`;
+            this.userQuestion = ` ${randomQuestion.question}\nOptions: ${randomQuestion.options.join(', ')}❓`;
 
             await msg.reply(
               `❓ ${randomQuestion.question}\nOptions: ${randomQuestion.options.join(', ')}`,
@@ -117,18 +117,19 @@ export class WhatsappService implements OnModuleInit {
 
           case '!help':
             msg.reply(
-              "🌟 *SecretarIA - Comandos Disponibles* 🌟\n\n" +
+              "🌟 *SecretarIA - Comandos Disponibles* 🌟\n" +
               "📌 `!help` - Muestra esta lista de comandos.\n" +
               "💬 `<texto>` - Chatea con el modelo de IA.\n" +
-              "📝 `!username <nombre>` - Cambia tu nombre de usuario.\n\n" +
-              "👤 `!perfil` - Muestra todos tus perfiles.\n\n" +
-              "👤 `!perfil -n` - Crea un nuevo perfil (n es un número).\n\n" +
+              "📝 `!username <nombre>` - Cambia tu nombre de usuario.\n" +
+              "❤️‍🩹 `!personalidad` - Test de personalidad que se aplica al contexto actual.\n" +
+              "👤 `!perfil` - Muestra todos tus perfiles.\n" +
+              "👤 `!perfil -n` - Crea un nuevo perfil (n es un número).\n" +
               
               "❓ *Ejemplo de uso:*\n" +
               "👉 `Hola, ¿cómo estás?`\n" +
-              "👉 `!username JuanPerez`\n\n" +
+              "👉 `!username JuanPerez`\n" +
               "👉 `!recordatorios - Ver todos tus recordatorios`\n\n" +
-              "⚡ _Escribe un comando y explora SecretarIA!_\n\n"
+              "⚡ _Escribe un comando y explora SecretarIA!_\n"
                 );
             break;
 
@@ -138,6 +139,39 @@ export class WhatsappService implements OnModuleInit {
               `🚫 *${deletedUser.name}* with number 📞 *${deletedUser.phoneNumber}* has been successfully deleted.`,
             );
 
+
+            case '!perfil':
+              if (!message) {
+                const profiles = await this.userService.getAllProfiles(userFound.id);
+                let msgPerfiles = `*Perfiles:*\n`
+                profiles.forEach(profile => (
+                  msgPerfiles += `\n${userFound.currentProfile === profile.id ? '🟢' : ''} Perfil ${profile.number}`
+                ));
+  
+                return msg.reply(msgPerfiles);
+              }
+  
+              const profileFlags = this.parseProfileFlags(message);
+  
+              if (!profileFlags?.profileNumber) {
+                return msg.reply('Formato incorrecto. Usa: !perfil -<número>');
+              }
+  
+              const numero = profileFlags.profileNumber;
+  
+              if (!profileFlags.deleteProfile) {
+                await this.userService.createProfile(userFound.id, numero);
+                return msg.reply(`Nuevo perfil: ${numero}`);
+              }
+  
+              const replyRemoveMsg = await this.userService.removeProfile(
+                numero,
+                userFound.id,
+              );
+  
+              return msg.reply(replyRemoveMsg);
+
+            
           case '!username':
             if (!message)
               return msg.reply(

@@ -1,43 +1,42 @@
 [
-    {
-      "question": "¿Cómo te describes?",
-      "options": ["Introvertido", "Extrovertido", "Ambivertido"]
-    },
-    {
-      "question": "¿Prefieres trabajar solo o en equipo?",
-      "options": ["Solo", "En equipo", "Depende del proyecto"]
-    },
-    {
-      "question": "¿Cómo tomas decisiones?",
-      "options": ["Con lógica", "Con intuición", "Depende de la situación"]
-    },
-    {
-      "question": "¿Cómo manejas el estrés?",
-      "options": ["Hago ejercicio", "Hablo con alguien", "Me distraigo con otra actividad"]
-    },
-    {
-      "question": "¿Eres más creativo o analítico?",
-      "options": ["Creativo", "Analítico", "Un poco de ambos"]
-    },
-    {
-      "question": "¿Qué es más importante para ti?",
-      "options": ["Seguridad", "Aventura", "Equilibrio"]
-    },
-    {
-      "question": "¿Cómo te sientes en eventos sociales grandes?",
-      "options": ["Energizado", "Agotado", "Neutro"]
-    },
-    {
-      "question": "¿Cómo prefieres aprender?",
-      "options": ["Leyendo", "Haciendo", "Escuchando"]
-    },
-    {
-      "question": "¿Qué prefieres hacer en tu tiempo libre?",
-      "options": ["Leer o ver películas", "Salir con amigos", "Practicar un hobby"]
-    },
-    {
-      "question": "¿Cómo te enfrentas a los problemas?",
-      "options": ["Analizo todas las opciones", "Sigo mi intuición", "Busco ayuda"]
-    }
-  ]
-  
+  {
+    "question": "¿Cómo te describes?",
+    "options": ["Introvertido", "Extrovertido", "Ambivertido"]
+  },
+  {
+    "question": "¿Prefieres trabajar solo o en equipo?",
+    "options": ["Solo", "En equipo", "Depende del proyecto"]
+  },
+  {
+    "question": "¿Cómo tomas decisiones?",
+    "options": ["Con lógica", "Con intuición", "Depende de la situación"]
+  },
+  {
+    "question": "¿Cómo manejas el estrés?",
+    "options": ["Hago ejercicio", "Hablo con alguien", "Me distraigo con otra actividad"]
+  },
+  {
+    "question": "¿Eres más creativo o analítico?",
+    "options": ["Creativo", "Analítico", "Un poco de ambos"]
+  },
+  {
+    "question": "¿Qué es más importante para ti?",
+    "options": ["Seguridad", "Aventura", "Equilibrio"]
+  },
+  {
+    "question": "¿Cómo te sientes en eventos sociales grandes?",
+    "options": ["Energizado", "Agotado", "Neutro"]
+  },
+  {
+    "question": "¿Cómo prefieres aprender?",
+    "options": ["Leyendo", "Haciendo", "Escuchando"]
+  },
+  {
+    "question": "¿Qué prefieres hacer en tu tiempo libre?",
+    "options": ["Leer o ver películas", "Salir con amigos", "Practicar un hobby"]
+  },
+  {
+    "question": "¿Cómo te enfrentas a los problemas?",
+    "options": ["Analizo todas las opciones", "Sigo mi intuición", "Busco ayuda"]
+  }
+]
