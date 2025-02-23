@@ -107,7 +107,7 @@ For **critical vulnerabilities**, we try to prioritize and expedite the process,
 
 ## 📌 Additional Resources
 - [SecretarIA Repository](https://github.com/pablosancal/SecretarIA)
-- [GitHub Security Advisories](https://github.com/your-username/SecretarIA/security/advisories)
+- [GitHub Security Advisories](https://github.com/pablosancal/SecretarIA/security/advisories)
 - [OWASP Security Guidelines](https://owasp.org/)
 
 **Thank you for helping us keep SecretarIA secure!** 🔒🚀

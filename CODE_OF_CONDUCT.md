@@ -41,7 +41,7 @@ If a community member engages in unacceptable behavior, maintainers may take any
 If you witness or experience behavior that violates this Code of Conduct, please **report it confidentially**.
 
 ### 📢 How to Report
-- GitHub Issues: [Report here](https://github.com/your-username/SecretarIA/issues)
+- GitHub Issues: [Report here](https://github.com/pablosancal/SecretarIA/issues)
 
 Reports will be reviewed and addressed promptly.
 

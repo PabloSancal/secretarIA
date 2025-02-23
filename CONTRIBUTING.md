@@ -59,7 +59,7 @@ To propose new features, open a **feature request issue** with:
 - Possible **implementation strategies**.
 
 ## 🔗 Additional Resources
-- [SecretarIA Repository](https://github.com/your-username/SecretarIA)
+- [SecretarIA Repository](https://github.com/pablosancal/SecretarIA)
 - [NestJS Documentation](https://docs.nestjs.com/)
 - [WhatsApp Web.js Documentation](https://github.com/pedroslopez/whatsapp-web.js/)
 - [DeepSeek AI Models](https://deepseek.ai/)
