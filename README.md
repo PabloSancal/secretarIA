@@ -21,6 +21,7 @@ One of the standout features of SecretarIA is that **all AI processing runs loca
 - 🛑 **Full privacy is maintained**
 - 🧠 **DeepSeek AI model** is used for message automation without exposing sensitive information
 - 🆓 **Completely free to use** with DeepSeek's open-source models
+- 🧠 **Emotional analysis** with user questions.
 
 This project has been tested using **DeepSeek's first-generation of reasoning models**, which offer comparable performance to **OpenAI-o1**. It includes six dense models distilled from **DeepSeek-R1**, based on **Llama** and **Qwen** architectures.
 
@@ -79,13 +80,11 @@ Create a `.env` file in the root directory with the following variables defined,
 
 ```sql
 PORT=3000
-
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=postgres-db
-DATABASE_URL="postgresql://postgres:123456@localhost:5432/postgres-db?schema=public"
-
-MESSAGE_KEY='f3b3a1c2d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1'
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+DATABASE_URL="your-database-url"
+MESSAGE_KEY='your-message-key'
 ```
 
 
@@ -124,24 +123,18 @@ The result should be something like this:
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG [RouterExplorer] Mapped {/messages/all, GET} route +0ms
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG [RoutesResolver] WhatsappController {/whatsapp}: +0ms
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG [RouterExplorer] Mapped {/whatsapp/qrcode, GET} route +0ms
-{
-  Bf: '/home/pablo-linux/secretarIA/dist/models/deepseek-assistant.ModelFile',
-  exist: true
-}
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG Model "deepseek_assistant" already exists.
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG [NestApplication] Nest application successfully started +214ms
 [Nest] 67788  - 22/02/2025, 23:50:35     LOG [Main] SecretarIA running on PORT 3000
 [Nest] 67788  - 22/02/2025, 23:50:39     LOG [WhatsappService] Connection successful
-
-
 ```
 
 Once the application ends loading, and after the database is set a QR-Code should be opent in Google Chrome. Once the code is scanned by the Server-Side WhatsApp phone number the bot is set up and ready to use.
 
 
-## 🎨 Code Style & Projet Structure
+## 🎨 Code Style & Project Structure
 
-SecretarIA follows a **modular and scalable** approach using **NestJS**. To maintain code quality and consistency, adhere to the following guidelines:
+SecretarIA follows a **modular** approach using **NestJS**. To maintain code quality and consistency, adhere to the following guidelines:
 
 ### 📌 General Guidelines
 - ✅ **TypeScript** as the primary language.
@@ -168,11 +161,17 @@ The project follows a **well-organized modu   lar structure**:
 │   │   ├── 📂 dto    
 │   │   │   ├── 📜 create-message.dto.ts      # DTO for creating messages
 │   │   │   ├── 📜 find-user-messages.dto.ts  # DTO for fetching user messages
-│   │   ├── 📜 messages.controller.ts         # Messages API controller
 │   │   ├── 📜 messages.module.ts             # Messages module definition
 │   │   ├── 📜 messages.service.ts            # Messages service logic
 │   ├── 📂 models   
 │   │   ├── 📜 deepseek-assistant.ModelFile    # DeepSeek AI model file
+│   ├── 📂 personality
+│   │   ├── 📜 personality.module.ts           # Personality Emotions Module 
+│   │   ├── 📜 personality.service.ts          # Personality Emotions Service
+│   │   └── 📜 questions.json                  # Personality Questions
+│   ├── 📂 prisma
+│   │   ├── 📜 prisma.module.ts
+│   │   └── 📜 prisma.service.ts
 │   ├── 📂 recordatorios    
 │   │   ├── 📜 recordatorios.module.ts        # Reminders module
 │   │   ├── 📜 recordatorios.service.ts       # Reminders service
