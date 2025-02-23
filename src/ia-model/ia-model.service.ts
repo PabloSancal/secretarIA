@@ -68,8 +68,6 @@ export class IaModelService implements OnModuleInit {
             const userMessages = await this.messageService.findAllUserMessages(profileId)
             userMessages.push({ role: 'user', content: prompt })
 
-            await this.messageService.createMessage(profileId, prompt)
-
             const response = await ollama.chat({
                 model: this.modelName,
                 messages: userMessages,

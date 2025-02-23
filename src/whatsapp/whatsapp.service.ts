@@ -217,15 +217,13 @@ export class WhatsappService implements OnModuleInit {
       } else {
         const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`es dia ${new Date()}`), userFound.currentProfile));
 
-        const commandReply = reply.match(/^!(\S*)/);
+        const commandReply = reply.match(/!recordatorio\s*(.*?)\s*\[(.*?)\]\s*\[(.*?)\]/);
 
-        if (commandReply && reply.charAt(0) === '!' && commandReply[1] === 'recordatorio') {
-          const commandReply = reply.match(/^!recordatorio\s*(.*?)\s*\[(.*?)\]\s*\[(.*?)\]/);
-
+        if (commandReply) {
+          const commandReply = reply.match(/!recordatorio\s*(.*?)\s*\[(.*?)\]\s*\[(.*?)\]/);
           if (commandReply) {
             const firstBracket = commandReply[2].trim();
             const secondBracket = commandReply[3].trim(); // [MM:DD:HH:MM]
-
             const matchDate = secondBracket.match(/(\d{2}):(\d{2}):(\d{2}):(\d{2})/);
 
             const [, month, day, hour, minute] = matchDate!.map(Number);
@@ -233,10 +231,12 @@ export class WhatsappService implements OnModuleInit {
             const reminderDate = new Date((new Date()).getFullYear(), month - 1, day, hour, minute);
 
             await this.recordatoriosService.createReminder(firstBracket, reminderDate, userFound.id)
-
+            return msg.reply(`👩🏻‍💼 Recordatorio añadido !!`);
           }
 
         }
+
+        await this.messageService.createMessage(userFound.currentProfile, msg.body)
 
         return msg.reply(`👩🏻‍💼 \n${this.cleanResponse(reply)}`);
       }
