@@ -119,10 +119,13 @@ export class WhatsappService implements OnModuleInit {
             msg.reply(
               "🌟 *SecretarIA - Comandos Disponibles* 🌟\n\n" +
               "📌 `!help` - Muestra esta lista de comandos.\n" +
-              "💬 `mensaje <texto>` - Chatea con el modelo de IA.\n" +
+              "💬 `<texto>` - Chatea con el modelo de IA.\n" +
               "📝 `!username <nombre>` - Cambia tu nombre de usuario.\n\n" +
+              "👤 `!perfil` - Muestra todos tus perfiles.\n\n" +
+              "👤 `!perfil -n` - Crea un nuevo perfil (n es un número).\n\n" +
+              
               "❓ *Ejemplo de uso:*\n" +
-              "👉 `!message Hola, ¿cómo estás?`\n" +
+              "👉 `Hola, ¿cómo estás?`\n" +
               "👉 `!username JuanPerez`\n\n" +
               "👉 `!recordatorios - Ver todos tus recordatorios`\n\n" +
               "⚡ _Escribe un comando y explora SecretarIA!_\n\n"
@@ -146,22 +149,22 @@ export class WhatsappService implements OnModuleInit {
           case '!recordatorios':
             if (!message) {
               const reminders = await this.recordatoriosService.findAllUserReminders(userFound.id);
-              let msgReminders = `**Reminders:** \n\n`;
+              let msgPerfiles = `**Recordatorios:** \n\n`
 
               reminders.forEach(reminder => (
-                msgReminders += `- ${reminder.name} : ${reminder.date.toLocaleString('en-US', {
+                msgPerfiles += `- ${reminder.name} : ${reminder.date.toLocaleString('en-US', {
                   weekday: 'short',
                   month: 'short',
                   day: '2-digit',
                   hour: '2-digit',
                   minute: '2-digit',
                   hour12: false
-                })}\n`
+                })
+                }\n`
               ));
 
-              return msg.reply(msgReminders);
+              return msg.reply(msgPerfiles);
             }
-            break;
 
           default:
             msg.reply(
@@ -170,7 +173,32 @@ export class WhatsappService implements OnModuleInit {
             break;
         }
       } else {
-        const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`it is day ${new Date()}`), userFound.currentProfile));
+        console.log('Entraaa')
+        const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`es dia ${new Date()}`), userFound.currentProfile));
+        console.log({ reply })
+        const commandReply = reply.match(/^!(\S*)/);
+
+        if (commandReply && reply.charAt(0) === '!' && commandReply[1] === 'recordatorio') {
+          const commandReply = reply.match(/^!recordatorio\s*(.*?)\s*\[(.*?)\]\s*\[(.*?)\]/);
+
+          if (commandReply) {
+            const firstBracket = commandReply[2].trim();
+            const secondBracket = commandReply[3].trim(); // [MM:DD:HH:MM]
+            console.log({ secondBracket })
+
+            const matchDate = secondBracket.match(/(\d{2}):(\d{2}):(\d{2}):(\d{2})/);
+            console.log({ matchDate })
+
+            const [, month, day, hour, minute] = matchDate!.map(Number);
+
+            const reminderDate = new Date((new Date()).getFullYear(), month - 1, day, hour, minute);
+
+            await this.recordatoriosService.createReminder(firstBracket, reminderDate, userFound.id)
+
+          }
+
+        }
+
         return msg.reply(`👩🏻‍💼 \n${this.cleanResponse(reply)}`);
       }
     });
