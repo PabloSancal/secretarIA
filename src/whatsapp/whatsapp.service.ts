@@ -212,27 +212,6 @@ export class WhatsappService implements OnModuleInit {
             }
             break;
 
-          case '!recordatorios':
-            if (!message) {
-              const reminders = await this.recordatoriosService.findAllUserReminders(userFound.id);
-              let msgPerfiles = `**Recordatorios:** \n\n`
-
-              reminders.forEach(reminder => (
-                msgPerfiles += `- ${reminder.name} : ${reminder.date.toLocaleString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false
-                })
-                }\n`
-              ));
-
-              return msg.reply(msgPerfiles);
-            }
-            break;
-
           default:
             msg.reply(
               '❌ *Comando no reconocido.*\n 👩🏻‍💼 Usa `!help` para ver la lista de comandos disponibles.',
@@ -240,7 +219,6 @@ export class WhatsappService implements OnModuleInit {
             break;
         }
       } else {
-        console.log('Entraaa')
         const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`es dia ${new Date()}`), userFound.currentProfile));
         console.log({ reply })
         const commandReply = reply.match(/^!(\S*)/);
