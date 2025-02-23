@@ -111,7 +111,7 @@ export class WhatsappService implements OnModuleInit {
             this.userQuestion = ` ${randomQuestion.question}\nOptions: ${randomQuestion.options.join(', ')}❓`;
 
             await msg.reply(
-              `❓ ${randomQuestion.question}\nOptions: ${randomQuestion.options.join(', ')}`,
+              `❓_*${randomQuestion.question}*_\n*Opciones*: ${randomQuestion.options.join(', ')}`,
             );
             break;
 
@@ -136,7 +136,7 @@ export class WhatsappService implements OnModuleInit {
           case '!remove':
             const deletedUser = await this.userService.removeUser(phoneNumber);
             return msg.reply(
-              `🚫 *${deletedUser.name}* with number 📞 *${deletedUser.phoneNumber}* has been successfully deleted.`,
+              `🚫 *${deletedUser.name}* con número 📞 *${deletedUser.phoneNumber}* ha sido borrado.`,
             );
 
 
@@ -175,15 +175,15 @@ export class WhatsappService implements OnModuleInit {
           case '!username':
             if (!message)
               return msg.reply(
-                '⚠️ *You must specify a new username.*\n\n📝 Example: `!username Pablo`',
+                '⚠️ *Debes espicificar un nombre de usuario.*\n\n📝 Ejemplo: `!username Pablo`',
               );
             const userName = await this.userService.changeName(message, phoneNumber);
-            return msg.reply(`✅ *Username successfully updated to:* *${message}* 🎉`);
+            return msg.reply(`✅ *Nombre de usuari actualizado:* *${message}* 🎉`);
 
           case '!recordatorios':
             if (!message) {
               const reminders = await this.recordatoriosService.findAllUserReminders(userFound.id);
-              let msgPerfiles = `**Recordatorios:** \n\n`
+              let msgPerfiles = `*Recordatorios:* \n\n`
 
               reminders.forEach(reminder => (
                 msgPerfiles += `- ${reminder.name} : ${reminder.date.toLocaleString('en-US', {
@@ -202,12 +202,11 @@ export class WhatsappService implements OnModuleInit {
 
           default:
             msg.reply(
-              '❌ *Unrecognized command.*\n 👩🏻‍💼 Use `!help` to see the list of available commands.',
+              '❌ *Comando no reconocido.*\n 👩🏻‍💼 Usa `!help` para ver la lista de comandos.',
             );
             break;
         }
       } else {
-        console.log('Entraaa')
         const reply = this.cleanResponse(await this.iaModelService.getOllamaMessage(msg.body.concat(`es dia ${new Date()}`), userFound.currentProfile));
         console.log({ reply })
         const commandReply = reply.match(/^!(\S*)/);
