@@ -1,4 +1,8 @@
-# 🤖 SecretarIA - Whatsapp Virtual Secretary
+# SecretarIA - Whatsapp Virtual Secretary
+
+<p align="center">
+  <img src="secretarIA_logo.png" alt="SecretarIA Logo" width="200">
+</p>
 
 SecretarIA is a **virtual secretary** powered by WhatsApp Web automation, designed to streamline message management and automate responses with a Local AI Model.
 
@@ -33,11 +37,16 @@ This project has been tested using **DeepSeek's first-generation of reasoning mo
 ## 🛠 Installation & Setup
 
 ### ✅ Prerequisites
-Ensure you have the following installed on your system:
-- **Node.js** (>= 16)
-- **npm** (Node Package Manager)
-- **Docker & Docker Compose**
-- **Google Chrome**
+
+
+| 🛠 Software          | 📌 Version                      | ℹ️ Description                          |
+|---------------------|--------------------------------|----------------------------------------|
+| **Node.js**        | v22.14.0                         | JavaScript runtime for backend execution |
+| **npm**            | 10.9.2                          | Node Package Manager                   |
+| **Docker**         | 26.1.3 (build 26.1.3) | Containerization platform              |
+| **Docker Compose** | 1.29.2          | Tool for managing multi-container apps |
+| **Chromium**       | 131.0.6778.85           | Required for Puppeteer automation      |
+
 
 ## 🔐 Encryption Details
 
@@ -53,14 +62,16 @@ Ensure you have the following installed on your system:
 - 🔒 **Encryption:** Generates a random IV, encrypts the message, and concatenates **IV + Encrypted Message**.
 - 🔓 **Decryption:** Extracts the IV, decrypts the message using the same key.
 
-
 ----
+
 ## 📥 Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/SecretarIA.git
 cd SecretarIA
-npm install npm i whatsapp-web.js npm i qrcode
+npm install
+npm i whatsapp-web.js
+npm i qrcode
 ```
 
 ### ⚙️ Configure Environment Variablesure Environment Variables
@@ -77,34 +88,125 @@ DATABASE_URL="postgresql://postgres:123456@localhost:5432/postgres-db?schema=pub
 MESSAGE_KEY='f3b3a1c2d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1'
 ```
 
+
 ### ▶️ Run the Application
+
+
 ```bash
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [NestFactory] Starting Nest application...
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] ConfigHostModule dependencies initialized +11ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] DiscoveryModule dependencies initialized +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] EventEmitterModule dependencies initialized +1ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] AppModule dependencies initialized +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] MessagesModule dependencies initialized +4ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [InstanceLoader] WhatsappModule dependencies initialized +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [RoutesResolver] MessagesController {/messages}: +3ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [RouterExplorer] Mapped {/messages, POST} route +2ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [RouterExplorer] Mapped {/messages/all, GET} route +1ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [RoutesResolver] WhatsappController {/whatsapp}: +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [RouterExplorer] Mapped {/whatsapp/qrcode, GET} route +0ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [NestApplication] Nest application successfully started +69ms
-[Nest] 14178  - 22/02/2025, 4:17:16     LOG [Main] SecretarIA running on PORT 3000
+npx prisma migrate dev
+npm run start
+```
+Or to see the full process:
+
+```bash
+npx prisma migrate dev
+npm run start:dev
+```
+
+The result should be something like this:
+
+```bash
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [NestFactory] Starting Nest application...
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] UsersModule dependencies initialized +17ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] RecordatoriosModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] ConfigHostModule dependencies initialized +1ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] DiscoveryModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] ScheduleModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] EventEmitterModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] AppModule dependencies initialized +1ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] IaModelModule dependencies initialized +1ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] MessagesModule dependencies initialized +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [InstanceLoader] WhatsappModule dependencies initialized +1ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [RoutesResolver] MessagesController {/messages}: +3ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [RouterExplorer] Mapped {/messages, POST} route +2ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [RouterExplorer] Mapped {/messages/all, GET} route +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [RoutesResolver] WhatsappController {/whatsapp}: +0ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [RouterExplorer] Mapped {/whatsapp/qrcode, GET} route +0ms
+{
+  Bf: '/home/pablo-linux/secretarIA/dist/models/deepseek-assistant.ModelFile',
+  exist: true
+}
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG Model "deepseek_assistant" already exists.
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [NestApplication] Nest application successfully started +214ms
+[Nest] 67788  - 22/02/2025, 23:50:35     LOG [Main] SecretarIA running on PORT 3000
+[Nest] 67788  - 22/02/2025, 23:50:39     LOG [WhatsappService] Connection successful
+
+
 ```
 
 Once the application ends loading, and after the database is set a QR-Code should be opent in Google Chrome. Once the code is scanned by the Server-Side WhatsApp phone number the bot is set up and ready to use.
 
 
----
+## 🎨 Code Style & Projet Structure
 
-## 📜 License
-This project is licensed under the **MIT License**.
+SecretarIA follows a **modular and scalable** approach using **NestJS**. To maintain code quality and consistency, adhere to the following guidelines:
 
-💡 **Feel free to use it or modify it for your own needs.** 🚀
+### 📌 General Guidelines
+- ✅ **TypeScript** as the primary language.
+- ✅ Use of **Decorators** (`@Injectable()`, `@Controller()`, `@OnEvent()`, etc.).
+- ✅ Modular code with **separation of concerns** (`WhatsappService`, `MessagesService`, etc.).
+- ✅ Clear logging with **NestJS Logger** for debugging and monitoring.
 
-💡 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. 🤝✨
+### 📁 Project Structure    
+The project follows a **well-organized modu   lar structure**:
+
+```bash
+📦 SecretarIA   
+├── 📂 src    
+│   ├── 📜 main.ts                            # Entry point of the application
+│   ├── 📜 app.module.ts                      # Main module of the application
+│   ├── 📂 config   
+│   │   ├── 📜 config.ts                      # Configuration settings
+│   ├── 📂 ia-model   
+│   │   ├── 📜 ia-model.module.ts             # AI Model module
+│   │   ├── 📜 ia-model.service.ts            # AI Model service
+│   ├── 📂 messages   
+│   │   ├── 📂 CryptoUtils    
+│   │   │   ├── 📜 CryptoUtils.ts             # Utility functions for cryptography
+│   │   ├── 📂 dto    
+│   │   │   ├── 📜 create-message.dto.ts      # DTO for creating messages
+│   │   │   ├── 📜 find-user-messages.dto.ts  # DTO for fetching user messages
+│   │   ├── 📜 messages.controller.ts         # Messages API controller
+│   │   ├── 📜 messages.module.ts             # Messages module definition
+│   │   ├── 📜 messages.service.ts            # Messages service logic
+│   ├── 📂 models   
+│   │   ├── 📜 deepseek-assistant.ModelFile    # DeepSeek AI model file
+│   ├── 📂 recordatorios    
+│   │   ├── 📜 recordatorios.module.ts        # Reminders module
+│   │   ├── 📜 recordatorios.service.ts       # Reminders service
+│   ├── 📂 users    
+│   │   ├── 📜 users.module.ts                # Users module
+│   │   ├── 📜 users.service.ts               # Users service
+│   ├── 📂 whatsapp   
+│   │   ├── 📜 whatsapp.controller.ts         # WhatsApp API controller
+│   │   ├── 📜 whatsapp.module.ts             # WhatsApp module definition
+│   │   ├── 📜 whatsapp.service.ts            # WhatsApp service logic
+├── 📜 tsconfig.build.json                    # TypeScript configuration for build
+└── 📜 tsconfig.json                          # TypeScript configuration file
+
+```   
+
+The project uses **dependency injection** t   o manage services without manual instantiation:
+```ts   
+constructor(    
+  private eventEmitter: EventEmitter2,    
+  private configService: ConfigService,
+  private iaModelService: IaModelService,
+  private userService: UsersService,
+) {}
+```
+
+
+## 📜 License  
+
+This project is licensed under the **MIT License**.  
+
+📄 The full license text can be found in [LICENSE](LICENSE).  
+
+💡 **Feel free to use it or modify it for your own needs.** 🚀  
+
+🤝 **Contributions are welcome!** Feel free to fork this repository and submit pull requests. ✨  
+
+For contribution guidelines, please check [CONTRIBUTING](CONTRIBUTING.md). 📜  

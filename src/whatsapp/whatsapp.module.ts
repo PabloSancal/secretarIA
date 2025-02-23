@@ -5,6 +5,7 @@ import { MessagesModule } from 'src/messages/messages.module';
 import { IaModelModule } from 'src/ia-model/ia-model.module';
 import { UsersService } from 'src/users/users.service';
 import { RecordatoriosModule } from 'src/recordatorios/recordatorios.module';
+import { PersonalityService } from 'src/personality/personality.service';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RecordatoriosModule } from 'src/recordatorios/recordatorios.module';
   providers: [
     WhatsappService,
     UsersService,
+    PersonalityService
   ],
   exports: [WhatsappService],
 })

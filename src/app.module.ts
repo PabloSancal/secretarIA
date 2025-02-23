@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { IaModelModule } from './ia-model/ia-model.module';
 import { RecordatoriosModule } from './recordatorios/recordatorios.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { PersonalityModule } from './personality/personality.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PrismaModule } from './prisma/prisma.module';
     IaModelModule,
     RecordatoriosModule,
     PrismaModule,
+    PersonalityModule
   ],
   controllers: [],
   providers: [CryptoUtils],
